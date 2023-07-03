@@ -1,5 +1,13 @@
 const choices = ["ROCK","PAPER","SCISSORS"];
 
+let computerSelectionGlobal;
+let playerSelectionGlobal;
+
+let loopCount = 0;
+
+let playerScore = 0;
+let computerScore = 0;
+
 function getComputerChoice(){
     
     let random = Math.floor((Math.random() * choices.length))
@@ -10,6 +18,9 @@ function getComputerChoice(){
 function playRound(playerSelection, computerSelection) {
     computerSelection = getComputerChoice();
     playerSelection = prompt("Rock, Paper or Scissors?").toUpperCase();
+
+    playerSelectionGlobal = playerSelection;
+    computerSelectionGlobal = computerSelection;
 
     console.log("Computer choosed: " + computerSelection);
     console.log("Player choosed " + playerSelection);
@@ -39,17 +50,45 @@ function playRound(playerSelection, computerSelection) {
   }
 
   function game() {
+    
+    function countLoop() {
+        ++loopCount;
+        if(loopCount == 5) showResult();
+    }
 
-        if(playRound() == "WIN") {
-            console.log("Win");
-            return;
-        } else if(playRound() == "LOSE") {
-            console.log("Lose");
-            return;
-        } else if(playRound() == "DRAW"){
-            console.log("Draw");
-            return;
+    for(let i = 1; i <= 5; i++) {
+        let result = playRound();
+        
+        if(result == "WIN") {
+            console.log("You win! " + playerSelectionGlobal + " beats " + computerSelectionGlobal + ".");
+            playerScore++;
+            console.log("Your score: " + playerScore);
+            console.log("Computer score: " + computerScore);
+
+        } else if(result == "LOSE") {
+            console.log("You Lose! " + computerSelectionGlobal + " beats " + playerSelectionGlobal + ".");
+            computerScore++;
+            console.log("Your score: " + playerScore);
+            console.log("Computer score: " + computerScore);
+
+        } else {
+            console.log("It's a draw! The computer choosed " + computerSelectionGlobal + " just like you.");
         }
+
+        countLoop();
+    }
+
+    function showResult() {
+        if(playerScore > computerScore) {
+            console.log("You won! Your score: " + playerScore + " | Computer score: " + computerScore);
+        } else if(computerScore > playerScore) {
+            console.log("You lost! Your score: " + playerScore + " | Computer score: " + computerScore);
+        } else {
+            console.log("It's a draw! Your score: " + playerScore + " | Computer score: " + computerScore);
+        }
+    }
   }
 
+
+  
 

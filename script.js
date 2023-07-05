@@ -3,13 +3,19 @@ const choices = ["ROCK","PAPER","SCISSORS"];
 let computerSelectionGlobal;
 let playerSelectionGlobal;
 
-let loopCount = 0;
-
 let playerScore = 0;
 let computerScore = 0;
 
+// Get all text holders
+const playerScoreHolder = document.getElementById("playerScore");
+const computerScoreHolder = document.getElementById("computerScore");
+const playerChoiceHolder = document.getElementById("yourChoice");
+const computerChoiceHolder = document.getElementById("computerChoice");
+
+// Disable the replay button on start
 document.getElementById("replayBtn").style.visibility = "hidden";
 
+// Add event listener on all player buttons
 const rockButton = document.getElementById("rock").addEventListener("click", () => {
     choiceRock();
     game();
@@ -29,25 +35,30 @@ const replayButton = document.getElementById("replayBtn").addEventListener("clic
     replay();
 });
 
-const playerScoreHolder = document.getElementById("playerScore");
-const computerScoreHolder = document.getElementById("computerScore");
-const computerChoiceHolder = document.getElementById("computerChoice");
 
-
-function getComputerChoice(){
-    
-    let random = Math.floor((Math.random() * choices.length))
-    let randomName = choices[random];
-    return (randomName);
-}
 
 function playRound(playerSelection, computerSelection) {
     computerSelection = getComputerChoice();
     playerSelection = playerSelectionGlobal;
-
     computerSelectionGlobal = computerSelection;
 
-    computerChoiceHolder.innerHTML = "Computer choice: " + computerSelection;
+    if(playerSelection == "ROCK") {
+        document.getElementById("rock").classList.add("choiceBtn");
+    } else if(playerSelection == "PAPER"){
+        document.getElementById("paper").classList.add("choiceBtn");
+    } else {
+        document.getElementById("scissors").classList.add("choiceBtn");
+    }
+
+    if(computerSelection == "ROCK") {
+        document.getElementById("rockComputer").classList.add("choiceBtn");
+    } else if(computerSelection == "PAPER"){
+        document.getElementById("paperComputer").classList.add("choiceBtn");
+    } else {
+        document.getElementById("scissorsComputer").classList.add("choiceBtn");
+    }
+
+
     console.log("Computer choosed: " + computerSelection);
     console.log("Player choosed " + playerSelection);
 
@@ -77,56 +88,65 @@ function playRound(playerSelection, computerSelection) {
 
   function game() {
 
+            document.getElementById("rock").disabled = true;
+            document.getElementById("paper").disabled = true;
+            document.getElementById("scissors").disabled = true;
+
         if(playerScore == 4) {
             playerScoreHolder.innerHTML = "";
             computerScoreHolder.innerHTML = "";
-            computerChoiceHolder.innerHTML = "You WON! Want to play again?";
+            playerChoiceHolder.innerHTML = "";
+            computerChoiceHolder.innerHTML = "";
+
+            choiceTxt.innerHTML = "You WON! Want to play again?";
             document.getElementById("rock").style.visibility = "hidden";
             document.getElementById("paper").style.visibility = "hidden";
             document.getElementById("scissors").style.visibility = "hidden";
+            
+            document.getElementById("rockComputer").style.visibility = "hidden";
+            document.getElementById("paperComputer").style.visibility = "hidden";
+            document.getElementById("scissorsComputer").style.visibility = "hidden"
+
             document.getElementById("replayBtn").style.visibility = "visible";
+
             
         } else if(computerScore == 4) {
             playerScoreHolder.innerHTML = "";
             computerScoreHolder.innerHTML = "";
-            computerChoiceHolder.innerHTML = "You lost :( Want to play again?";
+            playerChoiceHolder.innerHTML = "";
+            computerChoiceHolder.innerHTML = "";
+            
+            choiceTxt.innerHTML = "You lost :( Want to play again?";
             document.getElementById("rock").style.visibility = "hidden";
             document.getElementById("paper").style.visibility = "hidden";
             document.getElementById("scissors").style.visibility = "hidden";
+
+            document.getElementById("rockComputer").style.visibility = "hidden";
+            document.getElementById("paperComputer").style.visibility = "hidden";
+            document.getElementById("scissorsComputer").style.visibility = "hidden"
+
             document.getElementById("replayBtn").style.visibility = "visible";
         } else {
             let result = playRound();
             
             if(result == "WIN") {
-                console.log("You win! " + playerSelectionGlobal + " beats " + computerSelectionGlobal + ".");
+                choiceTxt.innerHTML = "You win! " + playerSelectionGlobal + " beats " + computerSelectionGlobal + ".";
                 playerScore++;
-                console.log("Your score: " + playerScore);
-                console.log("Computer score: " + computerScore);
                 showScore();
 
             } else if(result == "LOSE") {
-                console.log("You Lose! " + computerSelectionGlobal + " beats " + playerSelectionGlobal + ".");
+                choiceTxt.innerHTML = "You Lose! " + computerSelectionGlobal + " beats " + playerSelectionGlobal + ".";
                 computerScore++;
-                console.log("Your score: " + playerScore);
-                console.log("Computer score: " + computerScore);
                 showScore();
 
             } else {
-                console.log("It's a draw! The computer choosed " + computerSelectionGlobal + " just like you.");
+                choiceTxt.innerHTML = "It's a draw! The computer choosed " + computerSelectionGlobal + " just like you.";
                 showScore();
             }
+
+            setTimeout(afterChoice, 1000);
         }
   }
-
-  function showResult() {
-    if(playerScore > computerScore) {
-        console.log("You won! Your score: " + playerScore + " | Computer score: " + computerScore);
-    } else if(computerScore > playerScore) {
-        console.log("You lost! Your score: " + playerScore + " | Computer score: " + computerScore);
-    } else {
-        console.log("It's a draw! Your score: " + playerScore + " | Computer score: " + computerScore);
-    }
-}
 
     function choiceRock(){
         playerSelectionGlobal = "ROCK";
@@ -145,6 +165,7 @@ function playRound(playerSelection, computerSelection) {
         computerScoreHolder.innerHTML = "Computer score: " + computerScore;
     }
 
+    // Function to start replaying
     function replay(){
         playerScore = 0;
         computerScore = 0;
@@ -152,13 +173,45 @@ function playRound(playerSelection, computerSelection) {
         playerScoreHolder.innerHTML = "Your score: 0";
         computerScoreHolder.innerHTML = "Computer score: 0";
         computerChoiceHolder.innerHTML = "Computer choice: ";
+        playerChoiceHolder.innerHTML = "Player choice: "
 
         document.getElementById("rock").style.visibility = "visible";
         document.getElementById("paper").style.visibility = "visible";
         document.getElementById("scissors").style.visibility = "visible";
+
+        document.getElementById("rockComputer").style.visibility = "visible";
+        document.getElementById("paperComputer").style.visibility = "visible";
+        document.getElementById("scissorsComputer").style.visibility = "visible"
+
+        document.getElementById("rock").disabled = false;
+        document.getElementById("paper").disabled = false;
+        document.getElementById("scissors").disabled = false;
+
         document.getElementById("replayBtn").style.visibility = "hidden";
 
     }
 
-  
+    // Function to reset values
+    function afterChoice(){
+            document.getElementById("rock").classList.remove("choiceBtn");
+            document.getElementById("paper").classList.remove("choiceBtn");
+            document.getElementById("scissors").classList.remove("choiceBtn");
 
+            document.getElementById("rock").disabled = false;
+            document.getElementById("paper").disabled = false;
+            document.getElementById("scissors").disabled = false
+
+            document.getElementById("rockComputer").classList.remove("choiceBtn");
+            document.getElementById("paperComputer").classList.remove("choiceBtn");
+            document.getElementById("scissorsComputer").classList.remove("choiceBtn");
+    }
+    
+    
+
+    // Function to get a random Computer choice
+    function getComputerChoice(){
+        
+        let random = Math.floor((Math.random() * choices.length))
+        let randomName = choices[random];
+        return (randomName);
+    }

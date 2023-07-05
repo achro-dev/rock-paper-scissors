@@ -3,16 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600&family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <title>Rock Paper Scissors Kawaii</title>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <script src="script.js" defer></script>
-    <div id="playerScore">Your score: 0</div>
-    <div id="computerScore">Computer score: 0</div>
-    <div id="computerChoice">Computer choice: </div>
-    <button id="rock">Rock</button>
-    <button id="paper">Paper</button>
-    <button id="scissors">Scissors</button>
+    <h1 id="h1Title">Rock Paper Scissors Kawaii</h1>
+    
+    <div class="flexHolder">
+        <div class="playerChoiceHolder">
+            <div id="yourChoice">Your choice:</div> 
+            <button id="rock"><img src="photos/rock.png" width="100px" height="100px"></button>
+            <button id="paper"><img src="photos/paper.png" width="100px" height="100px"></button>
+            <button id="scissors"><img src="photos/scissors.png" width="100px" height="100px"></button>
+        </div>
+        <div class="scoreHolder">
+            <div id="playerScore">Your score: 0</div>
+            <div id="computerScore">Computer score: 0</div>
+        </div> 
+        <div class="computerChoiceHolder">   
+            <div id="computerChoice">Computer choice:</div>    
+            <button id="rockComputer" disabled><img src="photos/rock.png" width="100px" height="100px"></button>
+            <button id="paperComputer" disabled><img src="photos/paper.png" width="100px" height="100px"></button>
+            <button id="scissorsComputer" disabled><img src="photos/scissors.png" width="100px" height="100px"></button>
+        </div>
+    </div>
+    <div id="choiceTxt">
+
+    </div>
+    
     <button id="replayBtn">Replay</button>
 </body>
 </html>
